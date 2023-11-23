@@ -1,0 +1,61 @@
+package com.example.test2.service.impl;
+
+import com.example.test2.model.User;
+import com.example.test2.repository.CustomRepository;
+import com.example.test2.service.UserService;
+import com.example.test2.service.yaml.DataBaseProperties;
+import com.example.test2.service.yaml.YamlProperties;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
+import com.example.test2.service.DBContextHolder;
+import javax.sql.DataSource;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.IntStream;
+
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+    private final CustomRepository customRepository;
+    private final ApplicationContext applicationContext;
+    private final YamlProperties yamlProperties;
+
+    @Override
+    public List<User> findAllUser() {
+        List<DataBaseProperties> datasources = yamlProperties.getDatasources();
+        List<User> users = IntStream.range(0, datasources.size())
+                .mapToObj(this::getUsers)
+                .flatMap(Collection::stream)
+                .toList();
+        return users;
+    }
+
+    @Override
+    public List<User> getByUserName(String username) {
+        List<DataBaseProperties> datasources = yamlProperties.getDatasources();
+        List<User> user = IntStream.range(0, datasources.size())
+                .mapToObj(e -> getUsersByName(e, username))
+                .flatMap(Collection::stream)
+                .toList();
+        return user;
+    }
+
+    private List<User> getUsers(Integer indexBase) {
+        refreshCustomJdbc(indexBase);
+        return customRepository.getAllUser();
+    }
+
+    private List<User> getUsersByName(Integer indexBase, String username) {
+        refreshCustomJdbc(indexBase);
+        return customRepository.getUsersByName(username);
+    }
+
+    private void refreshCustomJdbc(int indexBase) {
+        DBContextHolder.setCurrentDb(indexBase);
+        DataSource ds = (DataSource) applicationContext.getBean("customDataSource");
+        JdbcTemplate customJdbcTemplate = (JdbcTemplate) applicationContext.getBean("customJdbcTemplate");
+        customJdbcTemplate.setDataSource(ds);
+    }
+}
