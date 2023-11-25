@@ -1,23 +1,23 @@
 # data source file
 ---
 datasources:
-  - name: data-base-1
+  - name: uamed_db
     strategy: Mysql  # this property is optional
-    url: jdbc:mysql://uamed.mysql.ukraine.com.ua/uamed_chefua?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:postgresql://localhost:5432/postgres
     table: user
-    user: uamed_chefua
-    password: JMca3^x4-1
+    user: sa
+    password: sa
     mapping:
       id: user_id
       username: username
       name: firstname
       surname: lastname
-  - name: data-base-2
+  - name: uamed_db
     strategy: MySql
-    url: jdbc:mysql://uamed.mysql.ukraine.com.ua/uamed_db?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:postgresql://localhost:5432/postgres
     table: user
-    user: uamed_db
-    password: rr2JFttn
+    user: sa
+    password: sa
     mapping:
       id: user_id
       username: username

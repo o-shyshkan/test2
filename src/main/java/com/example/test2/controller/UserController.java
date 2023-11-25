@@ -33,9 +33,9 @@ public class UserController {
 
     @Operation(summary = "Get users by username",
             description = "This method get users by users name from databases defined in" +
-                    " configuration file application.yml")
-    @GetMapping("/find")
-    public List<UserResponseDto> getByUserName(@Parameter(
+                    " configuration file.")
+    @GetMapping("/by-username")
+    public List<UserResponseDto> findByUserName(@Parameter(
                 name = "username",
                 description = "Username of user to be searched in databases.",
                 example = "admin",

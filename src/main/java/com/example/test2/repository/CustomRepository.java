@@ -19,7 +19,7 @@ import java.util.Map;
 @ComponentScan(basePackages = "com.example.test2")
 
 public class CustomRepository {
-    public static final String SQL_QUERY_TEMPLATE = "SELECT %s, %s, %s, %s FROM %s ";
+    public static final String SQL_QUERY_TEMPLATE = "SELECT %s, %s, %s, %s FROM %s.%s";
     @Qualifier("customJdbcTemplate")
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -47,6 +47,7 @@ public class CustomRepository {
                 mapColumn.get("username"),
                 mapColumn.get("name"),
                 mapColumn.get("surname"),
+                dataBaseProperties.getName(),
                 dataBaseProperties.getTable());
         return sql;
     }
