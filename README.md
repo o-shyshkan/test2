@@ -44,6 +44,7 @@ be edited.
 1. Get all Users from databases
 
    GET http://localhost:8080/users
+
    Response:
    [{"id":"1",
    "username":"admin",
@@ -56,6 +57,7 @@ be edited.
 2. Get User by username
 
    GET http://localhost:8080/users/by-username?username=admin
+
    Response:
    [{"id":"1",
    "username":"admin",
