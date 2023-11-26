@@ -3,6 +3,7 @@ user-aggregating-app it is application with REST API designed for aggregating us
 This service has declarative configuration for specification of data sources. Maximal quantity
 of data sources are infinite. When need to add/remove new datasource only one yaml configuration file is required to
 be edited.
+
 ##**Features**:
 1. Add/Remove databases from [application.yml](src%2Fmain%2Fresources%2Fapplication.yml) file;
 2. Get all users from all databases;
