@@ -22,20 +22,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.MountableFile;
-
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles("tc")
 @ContextConfiguration(initializers = {CustomRepositoryTest.Initializer.class})
 class CustomRepositoryTest {
-	public static final String USED_ADMIN = "admin";
+	public static final String USER_ADMIN = "admin";
+	public static final String USER_ID_NUMBER = "1";
+	public static final String USER_NAME_ADMIN = "admin";
+	public static final String USER_FIRST_NAME = "Admin";
+	public static final String USER_SURE_NAME = "Adminov";
+	public static final String BEAN_CUSTOM_DATA_SOURCE = "customDataSource";
+	public static final String BEAN_CUSTOM_JDBC_TEMPLATE = "customJdbcTemplate";
 	@Autowired
 	public CustomRepository customRepository;
 	@Autowired
@@ -74,20 +78,20 @@ class CustomRepositoryTest {
 		datasources.add(dataBaseProperties);
 		yamlProperties.setDatasources(datasources);
 		DBContextHolder.setCurrentDb(0);
-		DataSource ds = (DataSource) applicationContext.getBean("customDataSource");
-		JdbcTemplate customJdbcTemplate = (JdbcTemplate) applicationContext.getBean("customJdbcTemplate");
+		DataSource ds = (DataSource) applicationContext.getBean(BEAN_CUSTOM_DATA_SOURCE);
+		JdbcTemplate customJdbcTemplate = (JdbcTemplate) applicationContext.getBean(BEAN_CUSTOM_JDBC_TEMPLATE);
 		customJdbcTemplate.setDataSource(ds);
 		admin = new User();
-		admin.setId("1");
-		admin.setUsername("admin");
-		admin.setName("Admin");
-		admin.setSurname("Adminov");
+		admin.setId(USER_ID_NUMBER);
+		admin.setUsername(USER_NAME_ADMIN);
+		admin.setName(USER_FIRST_NAME);
+		admin.setSurname(USER_SURE_NAME);
 	}
 
 	@Test
 	@Transactional
 	public void getAllUser_Ok() {
-		List<User> actualUsers = customRepository.getAllUser();
+		List<User> actualUsers = customRepository.getAllUsers();
 		Assertions.assertFalse(actualUsers.isEmpty());
 		Assertions.assertEquals(3, actualUsers.size());
 	}
@@ -95,16 +99,16 @@ class CustomRepositoryTest {
 	@Test
 	@Transactional
 	public void getUsersByName_Ok() {
-		List<User> actualUsers = customRepository.getUsersByName(USED_ADMIN);
+		List<User> actualUsers = customRepository.getUsersByName(USER_ADMIN);
 		Assertions.assertFalse(actualUsers.isEmpty());
 		Assertions.assertEquals(1, actualUsers.size());
 		User actualUser = actualUsers.get(0);
 		Assertions.assertNotNull(actualUser);
 		Assertions.assertEquals(actualUser, admin);
-		Assertions.assertEquals("1", actualUser.getId());
-		Assertions.assertEquals("admin", actualUser.getUsername());
-		Assertions.assertEquals("Admin", actualUser.getName());
-		Assertions.assertEquals("Adminov", actualUser.getSurname());
+		Assertions.assertEquals(USER_ID_NUMBER, actualUser.getId());
+		Assertions.assertEquals(USER_NAME_ADMIN, actualUser.getUsername());
+		Assertions.assertEquals(USER_FIRST_NAME, actualUser.getName());
+		Assertions.assertEquals(USER_SURE_NAME, actualUser.getSurname());
 	}
 
 	@Test

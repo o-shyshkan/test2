@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,13 +75,12 @@ public class UserServiceTest {
     @Test
     void findAllUser_Ok() {
         Mockito.when(yamlProperties.getDatasources()).thenReturn(datasources);
-        Mockito.when(customRepository.getAllUser()).thenReturn(users);
+        Mockito.when(customRepository.getAllUsers()).thenReturn(users);
         Mockito.when(applicationContext.getBean("customDataSource")).thenReturn(ds);
         Mockito.when(applicationContext.getBean("customJdbcTemplate")).thenReturn(customJdbcTemplate);
-        List<User> actualUsers = userService.findAllUser();
+        List<User> actualUsers = userService.findAllUsers();
         Assertions.assertFalse(actualUsers.isEmpty());
         User actualUser = actualUsers.get(0);
         Assertions.assertNotNull(actualUser);
     }
-
 }

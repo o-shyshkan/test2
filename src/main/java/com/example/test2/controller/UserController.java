@@ -24,8 +24,8 @@ public class UserController {
             description = "This method get all users from databases defined in configuration" +
                     " file application.yml")
     @GetMapping()
-    public List<UserResponseDto> get() {
-        List<User> users = userService.findAllUser();
+    public List<UserResponseDto> getAllUsers() {
+        List<User> users = userService.findAllUsers();
         return users.stream()
                 .map(userDtoResponseMapper::toDto)
                 .toList();

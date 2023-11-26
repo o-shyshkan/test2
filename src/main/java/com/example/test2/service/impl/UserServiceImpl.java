@@ -18,12 +18,14 @@ import java.util.stream.IntStream;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    public static final String BEAN_CUSTOM_DATA_SOURCE = "customDataSource";
+    public static final String BEAN_CUSTOM_JDBC_TEMPLATE = "customJdbcTemplate";
     private final CustomRepository customRepository;
     private final ApplicationContext applicationContext;
     private final YamlProperties yamlProperties;
 
     @Override
-    public List<User> findAllUser() {
+    public List<User> findAllUsers() {
         List<DataBaseProperties> datasources = yamlProperties.getDatasources();
         List<User> users = IntStream.range(0, datasources.size())
                 .mapToObj(this::getUsers)
@@ -44,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     private List<User> getUsers(Integer indexBase) {
         refreshCustomJdbc(indexBase);
-        return customRepository.getAllUser();
+        return customRepository.getAllUsers();
     }
 
     private List<User> getUsersByName(Integer indexBase, String username) {
@@ -54,8 +56,8 @@ public class UserServiceImpl implements UserService {
 
     private void refreshCustomJdbc(int indexBase) {
         DBContextHolder.setCurrentDb(indexBase);
-        DataSource ds = (DataSource) applicationContext.getBean("customDataSource");
-        JdbcTemplate customJdbcTemplate = (JdbcTemplate) applicationContext.getBean("customJdbcTemplate");
+        DataSource ds = (DataSource) applicationContext.getBean(BEAN_CUSTOM_DATA_SOURCE);
+        JdbcTemplate customJdbcTemplate = (JdbcTemplate) applicationContext.getBean(BEAN_CUSTOM_JDBC_TEMPLATE);
         customJdbcTemplate.setDataSource(ds);
     }
 }

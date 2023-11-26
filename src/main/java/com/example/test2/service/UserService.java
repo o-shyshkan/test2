@@ -4,7 +4,7 @@ import com.example.test2.model.User;
 import java.util.List;
 
 public interface UserService {
-    List<User> findAllUser();
+    List<User> findAllUsers();
 
     List<User> getByUserName(String username);
 }

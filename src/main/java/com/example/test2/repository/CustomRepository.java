@@ -20,13 +20,17 @@ import java.util.Map;
 
 public class CustomRepository {
     public static final String SQL_QUERY_TEMPLATE = "SELECT %s, %s, %s, %s FROM %s.%s";
+    public static final String ID = "id";
+    public static final String USERNAME = "username";
+    public static final String NAME = "name";
+    public static final String SURNAME = "surname";
     @Qualifier("customJdbcTemplate")
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private YamlProperties yamlProperties;
 
-    public List<User> getAllUser() {
+    public List<User> getAllUsers() {
         List<User> users= jdbcTemplate.query(buildSqlQuery(), new UserMapper());
         return users;
     }
@@ -35,7 +39,7 @@ public class CustomRepository {
         Map<String, String> mapColumn = yamlProperties.getDatasources()
                 .get(DBContextHolder.getCurrentDb()).getMapping();
         return jdbcTemplate.query(buildSqlQuery()
-                .concat(String.format(" WHERE %s = '%s' ", mapColumn.get("username"), username)),
+                .concat(String.format(" WHERE %s = '%s' ", mapColumn.get(USERNAME), username)),
                 new UserMapper());
     }
 
@@ -43,10 +47,10 @@ public class CustomRepository {
         DataBaseProperties dataBaseProperties = yamlProperties.getDatasources().get(DBContextHolder.getCurrentDb());
         Map<String, String> mapColumn = dataBaseProperties.getMapping();
         String sql = String.format(SQL_QUERY_TEMPLATE,
-                mapColumn.get("id"),
-                mapColumn.get("username"),
-                mapColumn.get("name"),
-                mapColumn.get("surname"),
+                mapColumn.get(ID),
+                mapColumn.get(USERNAME),
+                mapColumn.get(NAME),
+                mapColumn.get(SURNAME),
                 dataBaseProperties.getName(),
                 dataBaseProperties.getTable());
         return sql;
