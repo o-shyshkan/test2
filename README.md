@@ -42,6 +42,7 @@ be edited.
 
 ##**Description REST API of user-aggregating-app:**
 1. Get all Users from databases
+
    GET http://localhost:8080/users
    Response:
    [{"id":"1",
@@ -53,6 +54,7 @@ be edited.
    "name":"Alexander",
    "surname":"A"}]
 2. Get User by username
+
    GET http://localhost:8080/users/by-username?username=admin
    Response:
    [{"id":"1",
