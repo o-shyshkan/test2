@@ -12,7 +12,8 @@
 	<artifactId>test2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>test2</name>
-	<description>Test2 project for Spring Boot</description>
+	<description>Service for aggregating users data from multiple databases</description>
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
