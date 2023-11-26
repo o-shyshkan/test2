@@ -9,7 +9,7 @@ be edited.
 2. Get all users from all databases;
 3. Get all users by user name;
 4. Get and sent information in JSON format;
-5. Docker-compose configuration for run postgreSQL with pgadmin
+5. Docker-compose configuration for run postgreSQL with pgadmin for test application
 
 ##**Structure:**
 * test2 - root directory for project;
@@ -34,11 +34,11 @@ be edited.
    ```https://github.com/o-shyshkan/test2```
 3. Open user-aggregating-app project in your favorite IDE
 4. Set up connection to your databases in file [application.yml](src%2Fmain%2Fresources%2Fapplication.yml)
-5. Also instead use own database you can start prepared postgreSQL and pgadmin container by docker-compose up  
+5. Also instead use own database you can start prepared postgreSQL and pgadmin container by type in command line docker-compose up  
    And use default configuration of datasource in [application.yml](src%2Fmain%2Fresources%2Fapplication.yml)
 6. Run program
 7. To get all users from databases type url http://localhost:8080/users
-8. There are 2 endpoint available that show below
+8. There are two endpoints available that show below
 
 ##**Description REST API of user-aggregating-app:**
 1. Get all Users from databases
