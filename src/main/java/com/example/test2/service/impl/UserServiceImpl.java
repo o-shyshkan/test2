@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final YamlProperties yamlProperties;
 
     @Override
-    public List<User> findAllUsers() {
+    public List<User> findAll() {
         List<DataBaseProperties> datasources = yamlProperties.getDatasources();
         List<User> users = IntStream.range(0, datasources.size())
                 .mapToObj(this::getUsers)

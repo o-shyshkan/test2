@@ -78,7 +78,7 @@ public class UserServiceTest {
         Mockito.when(customRepository.getAllUsers()).thenReturn(users);
         Mockito.when(applicationContext.getBean("customDataSource")).thenReturn(ds);
         Mockito.when(applicationContext.getBean("customJdbcTemplate")).thenReturn(customJdbcTemplate);
-        List<User> actualUsers = userService.findAllUsers();
+        List<User> actualUsers = userService.findAll();
         Assertions.assertFalse(actualUsers.isEmpty());
         User actualUser = actualUsers.get(0);
         Assertions.assertNotNull(actualUser);
